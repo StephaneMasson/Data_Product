@@ -1,0 +1,10 @@
+base
+shiny
+shinyapps
+devtools
+slidify
+ggplot2
+lattice
+survival
+Formula
+Hmisc

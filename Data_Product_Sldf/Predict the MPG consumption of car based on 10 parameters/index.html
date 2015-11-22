@@ -1,0 +1,142 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Predict the MPG consumption of car based on 10 parameters</title>
+  <meta name="description" content="">
+  <meta name="author" content="Stephane MASSON">
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <link rel="stylesheet" href="libraries/frameworks/revealjs/css/reveal.min.css">
+  <link rel="stylesheet" href="libraries/frameworks/revealjs/css/theme/moon.css" id="theme">
+  <link rel="stylesheet" href="libraries/highlighters/highlight.js/css/tomorrow.css" id="theme">
+  <!--[if lt IE 9]>
+  <script src="lib/js/html5shiv.js"></script>
+  <![endif]-->  <link rel="stylesheet" href = "assets/css/ribbons.css">
+
+</head>
+<body>
+  <div class="reveal">
+    <div class="slides">
+      <section class='' data-state='' id='slide-1'>
+  <h2>Introduction</h2>
+  <p class='fragment'><p style="line-height: 1em"><small>
+Nowadays we are facing an unprecedented environmental crisis. The ever growing consumption of fossil fuels puts earth and humanity at risk. In fact, most scientificts are concerned that if we keep on our current way of life will emit too much greenhouse gazes (CO2, NOx, CH4 etc.), going beyond a 2 Celsius degree temperature raise changing earth environment for ever. </small></p></p>
+
+<p class='fragment'><p style="line-height: 1em"><small><a href="http://www.gnesg.com/index.php?option=com_content&amp;view=article&amp;id=48:que-pese-lautomobile-dans-les-bilans-energetique-et-climatique-mondiaux-&amp;catid=27&amp;Itemid=53">Car emissions</a> are a big part of those emission and fossil fuel consumption. <strong>Studies have shown that they account for 15% of the overall pollution (4th cause of air pollution) and 34% of oil consumption (1st cause of oil consumption)</strong>. As a consequence, we have high insentive to be aware of the potential environmental damage made by our main way of transportation.</small></p></p>
+
+<p class='fragment'><p style="line-height: 1em"><small>This application aims to provide some information to help people choose the most efficient cars regarding fuel consumption (and by extension pollution emission) based on 10 factors: 
+<ul style="list-style-type:circle">
+  <li>Number of cylinders, </li>
+  <li>Displacement (cu.in), </li>
+  <li>Gross horsepower, </li>
+  <li>Rear axle ration,</li>
+  <li> Weight, </li> 
+  <li>1/4 mile time (sec), </li>
+  <li>V/S, </li>
+  <li>Type of transmission, </li>
+  <li>Number of forward gear, </li>
+  <li>Number of carburators</li>
+  </small></p></p>
+
+</section>
+<section class='class' data-state='' id='id'>
+  <h2>Data and how it works</h2>
+  <p class='fragment'><p style="line-height: 1em"><small>The data that have been used in order to estimate the MPG consumption is the mtcars R dataset, released by Henderson and Velleman (1981) in &quot;Building multiple regression models interactively. Biometrics, 37, 391-411&quot;.</p>
+
+<ol>
+<li class="fragment roll-in">
+A linear model is fitted to the dataset, modeling the effect of every parameters on the mpg. </p>
+
+<li class="fragment roll-in">
+Since the number of cylinders, V/S, type of transmissions, number of gears and number of carburators in the dataset are categorical variables the choice of possible values is limited using radio buttons. </p>
+
+<li class="fragment roll-in">
+For the weight, reactive() is used to convert the user input weight into the units used by the model, lb/1000.  </p>
+
+<li class="fragment roll-in">
+Finally, a pre-set function using the linear model is used to predict the mpg based on the variables input by the user.</p>
+</ol>
+
+<p></small></p></p>
+
+</section>
+<section class='class' data-state='' id='id'>
+  <h2>Manual transmission is better thant automatic</h2>
+  <p class='fragment'><p style="line-height: 1em"><small>By the look of the plots, it seems that in average (red point) manual transmission cars have a better performance regarding fuel consumption (in average mpg is smaller for automatic cars than for manual cars). This was confirmed by a t-test in order to statistically reject this hypothesis.</small></p></p>
+
+<p><img src="assets/fig/unnamed-chunk-1-1.png" alt="plot of chunk unnamed-chunk-1"> </p>
+
+</section>
+<section class='class' data-state='' id='id'>
+  <h2>Effect of weight and HP on MPG</h2>
+  <pre><code>## Analysis of Variance Table
+## 
+## Model 1: mpg ~ factor(am)
+## Model 2: mpg ~ factor(am) + wt
+## Model 3: mpg ~ factor(am) + wt + hp
+## Model 4: mpg ~ factor(am) + wt + hp + cyl + gear + disp + drat + qsec + 
+##     vs + carb
+##   Res.Df    RSS Df Sum of Sq       F    Pr(&gt;F)    
+## 1     30 720.90                                   
+## 2     29 278.32  1    442.58 63.0133 9.325e-08 ***
+## 3     28 180.29  1     98.03 13.9571  0.001219 ** 
+## 4     21 147.49  7     32.80  0.6671  0.697259    
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+</code></pre>
+
+<p class='fragment'><p style="line-height: 1em"><small>
+The anova test shows that wt and hp are the two other most significant variables impacting the MPG.
+</small></p></p>
+
+<p class='fragment'><p style="line-height: 1em"><small>R² for a model with the type of transmission, weigth and gross horsepower as predictors is 0.8398903, which mean that 84% variance in MPG is explained by this three parameters.</small></p></p>
+
+<p class='fragment'><p style="line-height: 1em"><small> <span style="color:#33FF99; font-weight:bold">However for our application we have choose to use all the available parameters in order to enable people to make the most enlightned choice of car possible.</span></small></p></p>
+
+</section>
+<section class='class' data-state='' id='id'>
+  <h2>The application</h2>
+  <p><img src="assets/img/Print_app.png" alt="picture_app"></p>
+
+<p><a href="https://stmasson.shinyapps.io/Data_Product">Access the app online</a></p>
+
+</section>
+<section class='class' data-state='' id='id'>
+  
+  
+</section>
+    </div>
+  </div>
+</body>
+  <script src="libraries/frameworks/revealjs/lib/js/head.min.js"></script>
+  <script src="libraries/frameworks/revealjs/js/reveal.min.js"></script>
+  <script>
+  // Full list of configuration options available here:
+  // https://github.com/hakimel/reveal.js#configuration
+  Reveal.initialize({
+    controls: true,
+    progress: true,
+    history: true,
+    center: true,
+    theme: Reveal.getQueryHash().theme || 'moon', 
+    transition: Reveal.getQueryHash().transition || 'none', 
+    dependencies: [
+    // Cross-browser shim that fully implements classList -
+    // https://github.com/eligrey/classList.js/
+      { src: 'libraries/frameworks/revealjs/lib/js/classList.js', condition: function() { return !document.body.classList;}},
+      // Zoom in and out with Alt+click
+      { src: 'libraries/frameworks/revealjs/plugin/zoom-js/zoom.js', async: true, condition: function() { return !!document.body.classList; } },
+      // Speaker notes
+      { src: 'libraries/frameworks/revealjs/plugin/notes/notes.js', async: true, condition: function() { return !!document.body.classList; } },
+      // Remote control your reveal.js presentation using a touch device
+      //{ src: 'libraries/frameworks/revealjs/plugin/remotes/remotes.js', async: true, condition: function() { return !!document.body.classList; } }
+      ]
+  });
+  </script>  <!-- LOAD HIGHLIGHTER JS FILES -->
+<script src="libraries/highlighters/highlight.js/highlight.pack.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
+<!-- DONE LOADING HIGHLIGHTER JS FILES -->
+ 
+
+</html>
